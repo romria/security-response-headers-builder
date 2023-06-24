@@ -1,0 +1,15 @@
+{
+  "name": "security-response-headers-builder",
+  "version": "0.1.0",
+  "description": "",
+  "repository": "https://github.com/romria/security-response-headers-builder",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch ./src/* ./src/index.js"
+  },
+  "author": "romria",
+  "license": "Unlicense",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
