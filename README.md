@@ -25,6 +25,7 @@ open [http://localhost:8000](http://localhost:8000)
 ### General Resources
 * [OWASP project: Secure Headers Project](https://owasp.org/www-project-secure-headers/)
 * [HTTP Security Response Headers Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html)
+* [Fetch metadata request headers](https://owasp.org/www-project-secure-headers/#test-locally-a-content-security-policy-for-weaknesses)
 * [Mozilla: X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
 * [Mozilla: X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection)
 * [Mozilla: Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
