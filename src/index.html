@@ -77,8 +77,11 @@
       }
       .row {
         display: block;
-        min-height: 1.5rem;
+        line-height: 1.5rem;
         margin: 0.25rem 0;
+      }
+      .p {
+        line-height: 1.5rem;
       }
       .label {
         display: inline-block;
@@ -148,7 +151,20 @@
     <div class="row">
       <input class="checkbox" type="checkbox" id="xfo" name="xfo">
       <label class="label" for="xfo">X-Frame-Options</label>
+      <select id="s_xfo" name="xfo" disabled>
+        <option value="DENY" selected>DENY</option>
+        <option value="SAMEORIGIN">SAMEORIGIN</option>
+      </select>
     </div>
+    <p class="p tab">
+      HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; or &lt;object&gt;. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
+    </p>
+    <p class="p tab">
+      Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers.
+    </p>
+    <p class="p tab">
+      X-Frame-Options header is only useful when the HTTP response where it is included has something to interact with (e.g. links, buttons). If the HTTP response is a redirect or an API returning JSON data, X-Frame-Options does not provide any security.
+    </p>
 
 <!--    <div class="row tab">-->
 <!--      <input class="checkbox" type="checkbox" id="gtmCustomVars" name="gtmCustomVars">-->
@@ -159,7 +175,6 @@
 
   <script async>
     /* DEFINITIONS */
-
     const HEADERS_TO_ADD = {
       xfo: {n: 'X-Frame-Options', v: 'DENY'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-frame-options
       xcto: {n: 'X-Content-Type-Options', v: 'nosniff'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-content-type-options
@@ -181,54 +196,57 @@
       // pkp: {n: 'Public-Key-Pins', v: undefined}, // DEPRECATED: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#public-key-pins-hpkp
       // fp: {n: 'Feature-Policy', v: undefined} // DEPRECATED
       // et: {n: 'Expect-CT', v: undefined} // DEPRECATED
-      // {n: 'Clear-Site-Data', v: '"cache","cookies","storage"'}
+      // csd: {n: 'Clear-Site-Data', v: '"cache","cookies","storage"'}
     };
+    Object.fromEntries = arr => Object.assign({}, ...Array.from(arr, k => ({[k]: false})));
+    const boxKeys = Object.keys(HEADERS_TO_ADD);
+    const boxValues = Object.fromEntries(boxKeys);
 
     // Prevent information disclosure via HTTP headers
     const HEADERS_TO_REMOVE = [
-      "$wsep",
-      "Host-Header",
-      "K-Proxy-Request",
-      "Liferay-Portal",
-      "Pega-Host",
-      "Powered-By",
-      "Product",
-      "Server",
-      "SourceMap",
-      "X-AspNet-Version",
-      "X-AspNetMvc-Version",
-      "X-Atmosphere-error",
-      "X-Atmosphere-first-request",
-      "X-Atmosphere-tracking-id",
-      "X-B3-ParentSpanId",
-      "X-B3-Sampled",
-      "X-B3-SpanId",
-      "X-B3-TraceId",
-      "X-CF-Powered-By",
-      "X-CMS",
-      "X-Content-Encoded-By",
-      "X-Envoy-Attempt-Count",
-      "X-Envoy-External-Address",
-      "X-Envoy-Internal",
-      "X-Envoy-Original-Dst-Host",
-      "X-Envoy-Upstream-Service-Time",
-      "X-Framework",
-      "X-Generated-By",
-      "X-Generator",
-      "X-Mod-Pagespeed",
-      "X-Old-Content-Length",
-      "X-Page-Speed",
-      "X-Php-Version",
-      "X-Powered-By",
-      "X-Powered-By-Plesk",
-      "X-Powered-CMS",
-      "X-Redirect-By",
-      "X-Server-Powered-By",
-      "X-SourceFiles",
-      "X-SourceMap",
-      "X-Turbo-Charged-By",
-      "X-Varnish-Backend",
-      "X-Varnish-Server"
+      '$wsep',
+      'Host-Header',
+      'K-Proxy-Request',
+      'Liferay-Portal',
+      'Pega-Host',
+      'Powered-By',
+      'Product',
+      'Server',
+      'SourceMap',
+      'X-AspNet-Version',
+      'X-AspNetMvc-Version',
+      'X-Atmosphere-error',
+      'X-Atmosphere-first-request',
+      'X-Atmosphere-tracking-id',
+      'X-B3-ParentSpanId',
+      'X-B3-Sampled',
+      'X-B3-SpanId',
+      'X-B3-TraceId',
+      'X-CF-Powered-By',
+      'X-CMS',
+      'X-Content-Encoded-By',
+      'X-Envoy-Attempt-Count',
+      'X-Envoy-External-Address',
+      'X-Envoy-Internal',
+      'X-Envoy-Original-Dst-Host',
+      'X-Envoy-Upstream-Service-Time',
+      'X-Framework',
+      'X-Generated-By',
+      'X-Generator',
+      'X-Mod-Pagespeed',
+      'X-Old-Content-Length',
+      'X-Page-Speed',
+      'X-Php-Version',
+      'X-Powered-By',
+      'X-Powered-By-Plesk',
+      'X-Powered-CMS',
+      'X-Redirect-By',
+      'X-Server-Powered-By',
+      'X-SourceFiles',
+      'X-SourceMap',
+      'X-Turbo-Charged-By',
+      'X-Varnish-Backend',
+      'X-Varnish-Serve',
     ];
 
     // Prevent exposure to cross-site scripting when hosting uploaded files
@@ -244,19 +262,26 @@
     }
 
     function generateJSON() {
-      document.getElementById("result").innerHTML = cspStr;
+      // document.getElementById("result").innerHTML = '';
     }
 
-    // // Change events for feature toggling
-    // document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', function({target:{id, checked}}) {
-    //   if (boxValues.hasOwnProperty(id)) {
-    //     switch(id) {
-    //       default:
-    //         boxValues[id] = checked;
-    //         generateJSON();
-    //     }
-    //   }
-    // }));
+    // Change events for feature toggling
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', function({target:{id, checked}}) {
+      if (HEADERS_TO_ADD.hasOwnProperty(id)) {
+        switch(id) {
+          default:
+            boxValues[id] = checked;
+            const dropdown = document.getElementById(`s_${id}`);
+            console.log(dropdown)
+
+            if (dropdown) {
+              dropdown.disabled = !checked;
+            }
+
+            generateJSON();
+        }
+      }
+    }));
 
     // Change events for text inputs of custom IDs
     // Object.keys(customIDs).forEach(id => document.getElementById(id).addEventListener('input', (e) => {

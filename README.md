@@ -4,6 +4,8 @@
 
 This project is made to assist developers with improving front-end apps security, particularly by adding special HTTP response headers. It ~~will contain~~ contains information about actual best practices as well as experimental & deprecated ones.
 
+Selected headers by default will contain recommended values in accordance with best practices. Please make sure to understand what they mean and change values if needed.
+
 `Content-Security-Policy` topic is covered in a separate repository: https://github.com/romria/content-security-policy-builder
 
 🔴IMPORTANT❗🔴 : This software is provided without warranty of any kind. It is not a ready-to-go protection against possible front-end attacks, and you should completely understand what are you doing before adding this feature to your production website
