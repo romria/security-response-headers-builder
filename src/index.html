@@ -85,7 +85,7 @@
       }
       .label {
         display: inline-block;
-        line-height: 1.5;
+        line-height: 1.6;
       }
       .tab {
         margin: 4px 0 4px 12px;
@@ -124,6 +124,7 @@
       }
       .label {
         cursor: pointer;
+        font-weight: 600;
       }
     </style>
   </head>
@@ -160,10 +161,57 @@
       HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; or &lt;object&gt;. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
     </p>
     <p class="p tab">
-      Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers.
+      Content Security Policy (CSP) <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors" target="_blank">frame-ancestors</a> directive obsoletes X-Frame-Options for supporting browsers.
     </p>
     <p class="p tab">
       X-Frame-Options header is only useful when the HTTP response where it is included has something to interact with (e.g. links, buttons). If the HTTP response is a redirect or an API returning JSON data, X-Frame-Options does not provide any security.
+    </p>
+
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="xcto" name="xcto">
+      <label class="label" for="xcto">X-Content-Type-Options</label>
+      <select id="s_xcto" name="xcto" disabled>
+        <option value="nosniff" selected>nosniff</option>
+      </select>
+    </div>
+    <p class="p tab">
+      HTTP response header is used by the server to indicate to the browsers that the MIME types advertised in the Content-Type headers should be followed and not guessed.
+    </p>
+    <p class="p tab">
+      This header is used to block browser's <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#mime_sniffing" target="_blank">MIME type sniffing</a>, which can transform non-executable MIME types into executable MIME types (<a href="https://blog.mozilla.org/security/2016/08/26/mitigating-mime-confusion-attacks-in-firefox/" target="_blank">MIME Confusion Attacks</a>).
+    </p>
+
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="xpcdp" name="xpcdp">
+      <label class="label" for="xpcdp">X-Permitted-Cross-Domain-Policies</label>
+      <select id="s_xpcdp" name="xpcdp" disabled>
+        <option value="none" selected>none</option>
+        <option value="master-only">master-only</option>
+        <option value="by-content-type">by-content-type</option>
+        <option value="by-ftp-filename">by-ftp-filename</option>
+        <option value="all">all</option>
+      </select>
+    </div>
+    <p class="p tab">
+      A cross-domain policy file is an XML document that grants a web client, such as Adobe Flash Player or Adobe Acrobat (though not necessarily limited to these), permission to handle data across domains. When clients request content hosted on a particular source domain and that content makes requests directed towards a domain other than its own, the remote domain needs to host a cross-domain policy file that grants access to the source domain, allowing the client to continue the transaction. Normally a meta-policy is declared in the master policy file, but for those who can’t write to the root directory, they can also declare a meta-policy using the X-Permitted-Cross-Domain-Policies HTTP response header.
+    </p>
+
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="rp" name="rp">
+      <label class="label" for="rp">Referrer-Policy</label>
+      <select id="s_rp" name="rp" disabled>
+        <option value="strict-origin-when-cross-origin" selected>strict-origin-when-cross-origin</option>
+        <option value="strict-origin">strict-origin</option>
+        <option value="no-referrer">no-referrer</option>
+        <option value="no-referrer-when-downgrade">no-referrer-when-downgrade</option>
+        <option value="origin">origin</option>
+        <option value="origin-when-cross-origin">origin-when-cross-origin</option>
+        <option value="same-origin">same-origin</option>
+        <option value="unsafe-url">unsafe-url</option>
+      </select>
+    </div>
+    <p class="p tab">
+      The Referrer-Policy HTTP header controls how much <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Referer_header:_privacy_and_security_concerns" target="_blank">referrer information</a> (sent with the Referer header) should be included with requests. Aside from the HTTP header, you can set this policy in HTML meta tag.
     </p>
 
 <!--    <div class="row tab">-->
@@ -180,6 +228,7 @@
       xcto: {n: 'X-Content-Type-Options', v: 'nosniff'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-content-type-options
       xpcdp: {n: 'X-Permitted-Cross-Domain-Policies', v : 'none'}, //
       rp: {n: 'Referrer-Policy', v: 'strict-origin-when-cross-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#referrer-policy
+
       ct: {n: 'Content-Type', v: 'text/html; charset=UTF-8'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#content-type
       cc: {n: 'Cache-Control', v: 'no-store, max-age=0'},
       p: {n: 'Pragma', v: 'no-cache'}, // The Pragma header is only specified for backwards compatibility with the HTTP/1.0 caches.
@@ -201,6 +250,7 @@
     Object.fromEntries = arr => Object.assign({}, ...Array.from(arr, k => ({[k]: false})));
     const boxKeys = Object.keys(HEADERS_TO_ADD);
     const boxValues = Object.fromEntries(boxKeys);
+    const selectValues = Object.fromEntries(boxKeys);
 
     // Prevent information disclosure via HTTP headers
     const HEADERS_TO_REMOVE = [
@@ -266,21 +316,30 @@
     }
 
     // Change events for feature toggling
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', function({target:{id, checked}}) {
-      if (HEADERS_TO_ADD.hasOwnProperty(id)) {
-        switch(id) {
-          default:
-            boxValues[id] = checked;
-            const dropdown = document.getElementById(`s_${id}`);
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', function({target:{id, checked}}) {
+        if (HEADERS_TO_ADD.hasOwnProperty(id)) {
+          switch(id) {
+            default:
+              boxValues[id] = checked;
+              const dropdown = document.getElementById(`s_${id}`);
 
-            if (dropdown) {
-              dropdown.disabled = !checked;
-            }
+              if (dropdown) {
+                dropdown.disabled = !checked;
+              }
 
-            generateJSON();
+              generateJSON();
+          }
         }
-      }
-    }));
+      });
+      const sid = `s_${cb.id}`;
+      const dropdown = document.getElementById(sid);
+      selectValues[cb.id] = dropdown.value;
+
+      dropdown.addEventListener('change', ({target:{id, value}}) => {
+        selectValues[cb.id] = value;
+      });
+  });
 
     // Change events for text inputs of custom IDs
     // Object.keys(customIDs).forEach(id => document.getElementById(id).addEventListener('input', (e) => {
