@@ -2,7 +2,9 @@
 
 ### 🚧👷‍🏗️🚀Under development...
 
-This project is made to assist developers with improving front-end apps security, particularly by adding special HTTP response headers. It ~~will contain~~ contains information about actual best practices as well as experimental & deprecated ones. 
+This project is made to assist developers with improving front-end apps security, particularly by adding special HTTP response headers. It ~~will contain~~ contains information about actual best practices as well as experimental & deprecated ones.
+
+`Content-Security-Policy` topic is covered in a separate repository: https://github.com/romria/content-security-policy-builder
 
 🔴IMPORTANT❗🔴 : This software is provided without warranty of any kind. It is not a ready-to-go protection against possible front-end attacks, and you should completely understand what are you doing before adding this feature to your production website
 
@@ -25,7 +27,6 @@ open [http://localhost:8000](http://localhost:8000)
 * [HTTP Security Response Headers Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html)
 * [Mozilla: X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)
 * [Mozilla: X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection)
-* [hstspreload.org](https://hstspreload.org/)
 * [Mozilla: Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
 * [Mozilla: Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
 * [Mozilla: Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT)
@@ -40,3 +41,15 @@ open [http://localhost:8000](http://localhost:8000)
 ### Testing
 * [Mozilla Observatory](https://observatory.mozilla.org/)
 * [SmartScanner](https://www.thesmartscanner.com/)
+* [hstspreload.org](https://hstspreload.org/)
+
+### ETC
+* [Disabling browsers to store passwords](https://stackoverflow.com/questions/32369/disable-browser-save-password-functionality/37292424#37292424)
+* [Practical web cache poisoning](https://portswigger.net/research/practical-web-cache-poisoning)
+* [Web cache entanglement](https://portswigger.net/research/web-cache-entanglement)
+* [Web cache poisoning](https://portswigger.net/web-security/web-cache-poisoning)
+* [Clickjacking](https://portswigger.net/web-security/clickjacking)
+* [Why you need "cross-origin isolated" for powerful features](https://web.dev/why-coop-coep/)
+* [A guide to enable cross-origin isolation](https://web.dev/cross-origin-isolation-guide/)
+* [XS-Leaks](https://xsleaks.dev/)
+

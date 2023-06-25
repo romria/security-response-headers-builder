@@ -163,10 +163,11 @@
 
     const settingsObj = {
       xfo: {n: 'X-Frame-Options', v: 'DENY'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-frame-options
-      xxp: {n: 'X-XSS-Protection¶', v: '0'}, // DEPRECATED: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-xss-protection
       xcto: {n: 'X-Content-Type-Options', v: 'nosniff'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-content-type-options
+      xpcdp: {n: 'X-Permitted-Cross-Domain-Policies', v : 'none'}, //
       rp: {n: 'Referrer-Policy', v: 'strict-origin-when-cross-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#referrer-policy
       ct: {n: 'Content-Type', v: 'text/html; charset=UTF-8'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#content-type
+      cc: {n: 'Cache-Control', v: 'no-store'},
       // sc: {n: 'Set-Cookie', v: ''}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#set-cookie
       // sts: {n: 'Strict-Transport-Security', v: 'max-age=63072000; includeSubDomains; preload'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#strict-transport-security-hsts
       // acao: {n: 'Access-Control-Allow-Origin', v: 'https://yoursite.com'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#access-control-allow-origin
@@ -180,7 +181,11 @@
       // xanv: {n: 'X-AspNet-Version', v: undefined}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-aspnet-version
       // xanmv: {n: 'X-AspNetMvc-Version', v: undefined}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-aspnetmvc-version
       // xdpc: {n: 'X-DNS-Prefetch-Control', v: 'off'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-dns-prefetch-control
+      // xxp: {n: 'X-XSS-Protection¶', v: '0'}, // DEPRECATED: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-xss-protection
       // pkp: {n: 'Public-Key-Pins', v: undefined}, // DEPRECATED: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#public-key-pins-hpkp
+      // fp: {n: 'Feature-Policy', v: undefined} // DEPRECATED
+      // et: {n: 'Expect-CT', v: undefined} // DEPRECATED
+      // {n: 'Clear-Site-Data', v: '"cache","cookies","storage","executionContexts"'}
     };
 
     function generateJSON() {
