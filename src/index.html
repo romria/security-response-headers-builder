@@ -263,6 +263,31 @@
       This header holds directives (instructions) for caching in both requests and responses. If a given directive is in a request, it does not mean this directive is in the response (source <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control" target="_blank">Mozilla MDN</a>). Specify the capability of a resource to be cached is important to prevent <a href="https://cwe.mitre.org/data/definitions/525.html" target="_blank">exposure of information via the cache</a>.
     </p>
 
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="p" name="p">
+      <label class="label" for="p">Pragma</label>
+      <select class="select" id="s_p" name="p" disabled>
+        <option value="no-cache" selected>no-cache</option>
+      </select>
+    </div>
+    <p class="p tab">
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Pragma" target="_blank">Pragma</a> header can be used for backwards compatibility with the HTTP/1.0 caches. However, Cache-Control is the recommended way to define the caching policy.
+    </p>
+
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="sts" name="sts">
+      <label class="label" for="sts">Strict-Transport-Security</label>
+      <label class="label" for="sts_max_age">max age:</label>
+      <input class="input" type="number" min="0" value="31536000" id="sts_max_age" disabled/>
+      <select class="select" id="s_sts" name="sts" disabled>
+        <option value="" selected></option>
+        <option value="includeSubDomains">includeSubDomains</option>
+      </select>
+    </div>
+    <p class="p tab">
+      HTTP Strict Transport Security (also named HSTS) is a web security policy mechanism which helps to protect websites against protocol downgrade attacks and cookie hijacking. It allows web servers to declare that web browsers (or other complying user agents) should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol. HSTS is an IETF standard track protocol and is specified in <a href="https://www.rfc-editor.org/rfc/rfc6797" target="_blank">RFC 6797</a>. A server implements an HSTS policy by supplying a header (Strict-Transport-Security) over an HTTPS connection (HSTS headers over HTTP are ignored).
+    </p>
+
 <!--    <div class="row tab">-->
 <!--      <input class="checkbox" type="checkbox" id="gtmCustomVars" name="gtmCustomVars">-->
 <!--      <label class="label" for="gtmCustomVars">Google Tag Custom Variables</label>-->
@@ -277,12 +302,12 @@
       xcto: {n: 'X-Content-Type-Options', v: 'nosniff'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-content-type-options
       xpcdp: {n: 'X-Permitted-Cross-Domain-Policies', v : 'none'}, //
       rp: {n: 'Referrer-Policy', v: 'strict-origin-when-cross-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#referrer-policy
-
-      ct: {n: 'Content-Type', v: 'text/html; charset=UTF-8'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#content-type
-      cc: {n: 'Cache-Control', v: 'no-store, max-age=0'},
+      ct: {n: 'Content-Type', v: 'text/html; charset=UTF-8'}, // ToDo: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#content-type
+      cc: {n: 'Cache-Control', v: 'no-store, max-age=0'}, // https://owasp.org/www-project-secure-headers/#cache-control
       p: {n: 'Pragma', v: 'no-cache'}, // The Pragma header is only specified for backwards compatibility with the HTTP/1.0 caches.
       // sc: {n: 'Set-Cookie', v: ''}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#set-cookie
       sts: {n: 'Strict-Transport-Security', v: 'max-age=31536000 ; includeSubDomains'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#strict-transport-security-hsts
+      // ToDo: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#preloading_strict_transport_security
       acao: {n: 'Access-Control-Allow-Origin', v: 'https://yoursite.com'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#access-control-allow-origin
       coop: {n: 'Cross-Origin-Opener-Policy', v: 'same-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-opener-policy-coop
       coep: {n: 'Cross-Origin-Embedder-Policy', v: 'require-corp'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-embedder-policy-coep
@@ -369,9 +394,12 @@
       cb.addEventListener('change', function({target:{id, checked}}) {
         if (HEADERS_TO_ADD.hasOwnProperty(id)) {
           switch(id) {
+            case 'sts':
+              const maxAgeInputSTS = document.getElementById('sts_max_age');
+              maxAgeInputSTS.disabled = !checked;
             case 'cc':
-              const maxAgeInput = document.getElementById('cc_max_age');
-              maxAgeInput.disabled = !checked;
+              const maxAgeInputCC = document.getElementById('cc_max_age');
+              maxAgeInputCC.disabled = !checked;
             default:
               boxValues[id] = checked;
               const dropdown = document.getElementById(`s_${id}`);
