@@ -288,6 +288,45 @@
       HTTP Strict Transport Security (also named HSTS) is a web security policy mechanism which helps to protect websites against protocol downgrade attacks and cookie hijacking. It allows web servers to declare that web browsers (or other complying user agents) should only interact with it using secure HTTPS connections, and never via the insecure HTTP protocol. HSTS is an IETF standard track protocol and is specified in <a href="https://www.rfc-editor.org/rfc/rfc6797" target="_blank">RFC 6797</a>. A server implements an HSTS policy by supplying a header (Strict-Transport-Security) over an HTTPS connection (HSTS headers over HTTP are ignored).
     </p>
 
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="coop" name="coop">
+      <label class="label" for="coop">Cross-Origin-Opener-Policy</label>
+      <select class="select" id="s_coop" name="coop" disabled>
+        <option value="same-origin" selected>same-origin</option>
+        <option value="same-origin-allow-popups">same-origin-allow-popups</option>
+        <option value="unsafe-none">unsafe-none</option>
+      </select>
+    </div>
+    <p class="p tab">
+      Response header that allows you to ensure a top-level document does not share a browsing context group with cross-origin documents. This header works together with Cross-Origin-Embedder-Policy (COEP) and Cross-Origin-Resource-Policy (CORP) explained below. This mechanism protects against attacks like Spectre which can cross the security boundary established by Same Origin Policy (SOP) for resources in the same browsing context group.
+    </p>
+
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="coep" name="coep">
+      <label class="label" for="coep">Cross-Origin-Embedder-Policy</label>
+      <select class="select" id="s_coep" name="coep" disabled>
+        <option value="require-corp" selected>require-corp</option>
+        <option value="unsafe-none">unsafe-none</option>
+        <option value="credentialless">credentialless</option>
+      </select>
+    </div>
+    <p class="p tab">
+      Response header that prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using CORP or CORS). Enabling this will block cross-origin resources not configured correctly from loading.
+    </p>
+
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="corp" name="corp">
+      <label class="label" for="corp">Cross-Origin-Resource-Policy</label>
+      <select class="select" id="s_corp" name="corp" disabled>
+        <option value="same-origin">same-origin</option>
+        <option value="same-site" selected>same-site</option>
+        <option value="cross-origin">cross-origin</option>
+      </select>
+    </div>
+    <p class="p tab">
+      Response header that allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like Spectre, as it allows browsers to block a given response before it enters an attacker's process.
+    </p>
+
 <!--    <div class="row tab">-->
 <!--      <input class="checkbox" type="checkbox" id="gtmCustomVars" name="gtmCustomVars">-->
 <!--      <label class="label" for="gtmCustomVars">Google Tag Custom Variables</label>-->
@@ -308,10 +347,10 @@
       // sc: {n: 'Set-Cookie', v: ''}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#set-cookie
       sts: {n: 'Strict-Transport-Security', v: 'max-age=31536000 ; includeSubDomains'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#strict-transport-security-hsts
       // ToDo: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#preloading_strict_transport_security
-      acao: {n: 'Access-Control-Allow-Origin', v: 'https://yoursite.com'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#access-control-allow-origin
       coop: {n: 'Cross-Origin-Opener-Policy', v: 'same-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-opener-policy-coop
       coep: {n: 'Cross-Origin-Embedder-Policy', v: 'require-corp'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-embedder-policy-coep
       corp: {n: 'Cross-Origin-Resource-Policy', v: 'same-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-resource-policy-corp
+      acao: {n: 'Access-Control-Allow-Origin', v: 'https://yoursite.com'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#access-control-allow-origin
       pp: {n: 'Permissions-Policy', v: 'accelerometer=(),ambient-light-sensor=(),autoplay=(),battery=(),camera=(),display-capture=(),document-domain=(),encrypted-media=(),fullscreen=(),gamepad=(),geolocation=(),gyroscope=(),layout-animations=(self),legacy-image-formats=(self),magnetometer=(),microphone=(),midi=(),oversized-images=(self),payment=(),picture-in-picture=(),publickey-credentials-get=(),speaker-selection=(),sync-xhr=(self),unoptimized-images=(self),unsized-media=(self),usb=(),screen-wake-lock=(),web-share=(),xr-spatial-tracking=()'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#permissions-policy-formerly-feature-policy
       // pp2: {n: 'Permissions-Policy', v: 'interest-cohort=()'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#floc-federated-learning-of-cohorts
       xdpc: {n: 'X-DNS-Prefetch-Control', v: 'off'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-dns-prefetch-control
