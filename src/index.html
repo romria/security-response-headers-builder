@@ -170,10 +170,10 @@
       id="btnCopy"
       class="btn btnCopy"
     >Copy</button>
-    <button
-      id="btnReset"
-      class="btn btnReset"
-    >Reset</button>
+<!--    <button-->
+<!--      id="btnReset"-->
+<!--      class="btn btnReset"-->
+<!--    >Reset</button>-->
   </div>
 
   <fieldset>
@@ -381,6 +381,8 @@
     const boxKeys = Object.keys(HEADERS_TO_ADD);
     const boxValues = Object.fromEntries(boxKeys);
     const selectValues = Object.fromEntries(boxKeys);
+    let jsonObj = {};
+    let jsonStr = '';
 
     // Prevent information disclosure via HTTP headers
     const HEADERS_TO_REMOVE = [
@@ -442,7 +444,37 @@
     }
 
     function generateJSON() {
-      // document.getElementById("result").innerHTML = '';
+      const result = {};
+
+      boxKeys.forEach((k) => {
+        const isSelected = boxValues[k];
+
+        if (isSelected) {
+          const select = document.getElementById(`s_${k}`);
+          const header = HEADERS_TO_ADD[k];
+
+          if (select && header && header.n) {
+
+            switch(k) {
+              case 'cc':
+                const ccMaxAge = document.getElementById('cc_max_age');
+                result[header.n] = `${select.value}; max-age: ${ccMaxAge.value}`;
+                break;
+              case 'sts':
+                const stsMaxAge = document.getElementById('sts_max_age');
+                result[header.n] = `max-age: ${stsMaxAge.value}${select.value ? `; ${select.value}` : ''}`;
+                break;
+              default:
+                result[header.n] = select.value;
+            }
+          }
+
+        }
+      });
+
+      jsonObj = result;
+      jsonStr = JSON.stringify(jsonObj);
+      document.getElementById('result').innerHTML = jsonStr;
     }
 
     // Change events for feature toggling
@@ -475,7 +507,14 @@
       dropdown.addEventListener('change', ({target:{id, value}}) => {
         selectValues[cb.id] = value;
       });
-  });
+    });
+
+    document.querySelectorAll('select, input[type="text"], input[type="number"]').forEach(s => {
+      s.addEventListener('change', () => {
+        generateJSON();
+      })
+    })
+
 
     // Change events for text inputs of custom IDs
     // Object.keys(customIDs).forEach(id => document.getElementById(id).addEventListener('input', (e) => {
@@ -484,9 +523,9 @@
     // }));
 
     // Copy to clipboard
-    // document.getElementById("btnCopy").onclick = () => {
-    //   navigator.clipboard.writeText(cspStr);
-    // }
+    document.getElementById("btnCopy").onclick = () => {
+      navigator.clipboard.writeText(jsonStr);
+    }
 
     // Reset
     // document.getElementById("btnReset").onclick = () => {
