@@ -327,6 +327,21 @@
       Response header that allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like Spectre, as it allows browsers to block a given response before it enters an attacker's process.
     </p>
 
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="xdpc" name="xdpc">
+      <label class="label" for="xdpc">X-DNS-Prefetch-Control</label>
+      <select class="select" id="s_xdpc" name="xdpc" disabled>
+        <option value="off" selected>off</option>
+        <option value="on">on</option>
+      </select>
+    </div>
+    <p class="p tab">
+      Response header that controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on both links that the user may choose to follow as well as URLs for items referenced by the document, including images, CSS, JavaScript, and so forth.
+    </p>
+    <p class="p tab">
+      The default behavior of browsers is to perform DNS caching which is good for most websites. If you do not control links on your website, you might want to set off as a value to disable DNS prefetch to avoid leaking information to those domains.
+    </p>
+
 <!--    <div class="row tab">-->
 <!--      <input class="checkbox" type="checkbox" id="gtmCustomVars" name="gtmCustomVars">-->
 <!--      <label class="label" for="gtmCustomVars">Google Tag Custom Variables</label>-->
@@ -350,8 +365,10 @@
       coop: {n: 'Cross-Origin-Opener-Policy', v: 'same-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-opener-policy-coop
       coep: {n: 'Cross-Origin-Embedder-Policy', v: 'require-corp'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-embedder-policy-coep
       corp: {n: 'Cross-Origin-Resource-Policy', v: 'same-origin'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#cross-origin-resource-policy-corp
+
       acao: {n: 'Access-Control-Allow-Origin', v: 'https://yoursite.com'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#access-control-allow-origin
       pp: {n: 'Permissions-Policy', v: 'accelerometer=(),ambient-light-sensor=(),autoplay=(),battery=(),camera=(),display-capture=(),document-domain=(),encrypted-media=(),fullscreen=(),gamepad=(),geolocation=(),gyroscope=(),layout-animations=(self),legacy-image-formats=(self),magnetometer=(),microphone=(),midi=(),oversized-images=(self),payment=(),picture-in-picture=(),publickey-credentials-get=(),speaker-selection=(),sync-xhr=(self),unoptimized-images=(self),unsized-media=(self),usb=(),screen-wake-lock=(),web-share=(),xr-spatial-tracking=()'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#permissions-policy-formerly-feature-policy
+
       // pp2: {n: 'Permissions-Policy', v: 'interest-cohort=()'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#floc-federated-learning-of-cohorts
       xdpc: {n: 'X-DNS-Prefetch-Control', v: 'off'}, // https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-dns-prefetch-control
       // xxp: {n: 'X-XSS-Protection', v: '0'}, // DEPRECATED: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html#x-xss-protection
