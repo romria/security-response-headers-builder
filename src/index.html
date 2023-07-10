@@ -183,8 +183,8 @@
       <input class="checkbox" type="checkbox" id="xfo" name="xfo">
       <label class="label" for="xfo">X-Frame-Options</label>
       <select class="select" id="s_xfo" name="xfo" disabled>
-        <option value="DENY" selected>DENY</option>
-        <option value="SAMEORIGIN">SAMEORIGIN</option>
+        <option value="deny" selected>deny</option>
+        <option value="sameorigin">sameorigin</option>
       </select>
     </div>
     <p class="p tab">
@@ -230,9 +230,9 @@
       <input class="checkbox" type="checkbox" id="rp" name="rp">
       <label class="label" for="rp">Referrer-Policy</label>
       <select class="select" id="s_rp" name="rp" disabled>
-        <option value="strict-origin-when-cross-origin" selected>strict-origin-when-cross-origin</option>
+        <option value="strict-origin-when-cross-origin">strict-origin-when-cross-origin</option>
         <option value="strict-origin">strict-origin</option>
-        <option value="no-referrer">no-referrer</option>
+        <option value="no-referrer" selected>no-referrer</option>
         <option value="no-referrer-when-downgrade">no-referrer-when-downgrade</option>
         <option value="origin">origin</option>
         <option value="origin-when-cross-origin">origin-when-cross-origin</option>
@@ -280,8 +280,8 @@
       <label class="label" for="sts_max_age">max age:</label>
       <input class="input" type="number" min="0" value="31536000" id="sts_max_age" disabled/>
       <select class="select" id="s_sts" name="sts" disabled>
-        <option value="" selected></option>
-        <option value="includeSubDomains">includeSubDomains</option>
+        <option value=""></option>
+        <option value="includeSubDomains" selected>includeSubDomains</option>
       </select>
     </div>
     <p class="p tab">
@@ -318,8 +318,8 @@
       <input class="checkbox" type="checkbox" id="corp" name="corp">
       <label class="label" for="corp">Cross-Origin-Resource-Policy</label>
       <select class="select" id="s_corp" name="corp" disabled>
-        <option value="same-origin">same-origin</option>
-        <option value="same-site" selected>same-site</option>
+        <option value="same-origin" selected>same-origin</option>
+        <option value="same-site">same-site</option>
         <option value="cross-origin">cross-origin</option>
       </select>
     </div>
