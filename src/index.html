@@ -1,8 +1,8 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
   <head>
     <meta charset="utf-8">
-    <title>CSP Builder</title>
+    <title>Security Response Headers</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -342,6 +342,14 @@
       The default behavior of browsers is to perform DNS caching which is good for most websites. If you do not control links on your website, you might want to set off as a value to disable DNS prefetch to avoid leaking information to those domains.
     </p>
 
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="delete_headers" name="delete_headers">
+      <label class="label" for="delete_headers">Prevent information disclosure via headers</label>
+    </div>
+    <p class="p tab">
+      Provides a collection of response headers to remove, when possible, from any response to prevent any disclosure of technical information about environment. These headers will have a "null" value in the result JSON and should be force-removed by a web server config, reverse proxy, or a web application firewall.
+    </p>
+
 <!--    <div class="row tab">-->
 <!--      <input class="checkbox" type="checkbox" id="gtmCustomVars" name="gtmCustomVars">-->
 <!--      <label class="label" for="gtmCustomVars">Google Tag Custom Variables</label>-->
@@ -382,9 +390,10 @@
     const boxValues = Object.fromEntries(boxKeys);
     const selectValues = Object.fromEntries(boxKeys);
     let jsonObj = {};
-    let jsonStr = '';
+    let jsonStr = '{}';
 
     // Prevent information disclosure via HTTP headers
+    let isUnsafeHeadersRemoved = false;
     const HEADERS_TO_REMOVE = [
       '$wsep',
       'Host-Header',
@@ -472,6 +481,12 @@
         }
       });
 
+      if (isUnsafeHeadersRemoved) {
+        HEADERS_TO_REMOVE.forEach((h) => {
+          result[h] = null;
+        })
+      }
+
       jsonObj = result;
       jsonStr = JSON.stringify(jsonObj);
       document.getElementById('result').innerHTML = jsonStr;
@@ -498,10 +513,16 @@
 
               generateJSON();
           }
+        } else if (id === 'delete_headers') {
+          isUnsafeHeadersRemoved = checked;
+          generateJSON();
         }
       });
       const sid = `s_${cb.id}`;
       const dropdown = document.getElementById(sid);
+
+      if (!dropdown) return;
+
       selectValues[cb.id] = dropdown.value;
 
       dropdown.addEventListener('change', ({target:{id, value}}) => {
