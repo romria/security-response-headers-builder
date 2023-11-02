@@ -8,12 +8,8 @@ module.exports = {
   entry: './src/scripts/index.js',
   devServer: {
     port: '8000',
-    static: {
-      directory: path.join(__dirname, 'public')
-    },
     hot: true,
     liveReload: true,
-    historyApiFallback: true,
   },
   module: {
     rules: [
