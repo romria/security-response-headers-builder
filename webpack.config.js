@@ -6,12 +6,6 @@ module.exports = {
   mode: 'development',
   // devtool: 'inline-source-map',
   entry: './src/scripts/index.js',
-  output: {
-    filename: 'scripts/[name].[contenthash].js',
-    path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
-    assetModuleFilename: '[name][ext][query]'
-  },
   devServer: {
     port: '8000',
     static: {
@@ -20,9 +14,6 @@ module.exports = {
     hot: true,
     liveReload: true,
     historyApiFallback: true,
-  },
-  resolve: {
-    extensions: ['.js', '.json'],
   },
   module: {
     rules: [
@@ -35,14 +26,7 @@ module.exports = {
         test: /\.css$/i,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: {
-                localIdentName: '[local]'
-              }
-            }
-          }
+          'css-loader'
         ]
       },
     ]
