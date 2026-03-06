@@ -1,37 +1,38 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
   target: 'web',
-  mode: 'development',
-  // devtool: 'inline-source-map',
-  entry: './src/scripts/index.js',
+  mode: isProd ? 'production' : 'development',
+  devtool: isProd ? 'source-map' : 'eval-source-map',
+  entry: './src/scripts/index.ts',
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
   devServer: {
-    port: '8000',
+    port: 8000,
     hot: true,
-    liveReload: true,
   },
   module: {
     rules: [
       {
-        test: /\.js$/i,
-        use: 'babel-loader',
-        exclude: /node_modules/
+        test: /\.ts$/i,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/i,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader'],
       },
-    ]
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
       inject: 'body',
-      scriptLoading: 'defer'
+      scriptLoading: 'defer',
     }),
-  ]
+  ],
 };
