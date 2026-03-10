@@ -36,7 +36,7 @@ src/
   styles/
     index.css
 tsconfig.json
-webpack.config.js
+webpack.config.ts
 package.json
 ```
 
