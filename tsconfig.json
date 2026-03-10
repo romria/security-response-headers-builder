@@ -8,17 +8,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "esModuleInterop": true,
     "sourceMap": true,
-    "skipLibCheck": true,
-    "types": []
+    "skipLibCheck": true
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-      "moduleResolution": "node",
-      "types": ["node"]
-    }
-  },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "webpack.config.ts"]
 }

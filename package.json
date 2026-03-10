@@ -6,6 +6,7 @@
     "node": ">=18.11.0"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "start": "webpack serve --config=webpack.config.ts --progress",
     "build": "webpack --config=webpack.config.ts --mode=production"
   },

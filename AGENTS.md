@@ -19,8 +19,9 @@ No backend. No framework. No test suite.
 
 ```bash
 npm install
-npm start        # serves at http://localhost:8000
-npm run build    # production bundle → dist/
+npm start           # serves at http://localhost:8000
+npm run build       # production bundle → dist/
+npm run typecheck   # tsc --noEmit across src/ and webpack.config.ts
 ```
 
 No lint or test scripts.
