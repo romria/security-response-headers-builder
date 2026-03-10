@@ -13,7 +13,7 @@ No backend. No framework. No test suite.
 - TypeScript (strict mode, ES2020 target)
 - Plain CSS
 - Webpack 5 + webpack-dev-server
-- Node.js >= 18.11.0
+- Node.js >= 22.0.0
 
 ## Setup & Run
 

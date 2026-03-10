@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Browser-based tool to configure HTTP security response headers",
   "engines": {
-    "node": ">=18.11.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
