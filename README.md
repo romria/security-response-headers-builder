@@ -9,7 +9,7 @@ Selected headers by default will contain recommended values in accordance with b
 **IMPORTANT:** This software is provided without warranty of any kind. Please make sure you understand what each header does and test everything before adding these to your production website.
 
 ### Prerequisites
-* [Node.js](https://nodejs.org/) v18.11.0 or higher
+* [Node.js](https://nodejs.org/) v22.0.0 or higher
 
 ### Installation
 ```bash

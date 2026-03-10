@@ -13,14 +13,15 @@ No backend. No framework. No test suite.
 - TypeScript (strict mode, ES2020 target)
 - Plain CSS
 - Webpack 5 + webpack-dev-server
-- Node.js >= 18.11.0
+- Node.js >= 22.0.0
 
 ## Setup & Run
 
 ```bash
 npm install
-npm start        # serves at http://localhost:8000
-npm run build    # production bundle → dist/
+npm start           # serves at http://localhost:8000
+npm run build       # production bundle → dist/
+npm run typecheck   # tsc --noEmit across src/ and webpack.config.ts
 ```
 
 No lint or test scripts.
@@ -36,7 +37,7 @@ src/
   styles/
     index.css
 tsconfig.json
-webpack.config.js
+webpack.config.ts
 package.json
 ```
 

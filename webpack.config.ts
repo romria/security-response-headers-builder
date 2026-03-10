@@ -1,9 +1,11 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import type { Configuration } from 'webpack';
+import 'webpack-dev-server';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-module.exports = {
+const config: Configuration = {
   target: 'web',
   mode: isProd ? 'production' : 'development',
   devtool: isProd ? 'source-map' : 'eval-source-map',
@@ -36,3 +38,5 @@ module.exports = {
     }),
   ],
 };
+
+export default config;
