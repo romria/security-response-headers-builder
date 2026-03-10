@@ -10,12 +10,14 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": []
   },
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS",
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+      "types": ["node"]
     }
   },
   "include": ["src/**/*.ts"]
